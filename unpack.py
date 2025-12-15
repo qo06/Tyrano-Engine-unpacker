@@ -13,16 +13,15 @@ def FolderLoop(Data='',Current='',sf=0) -> list:
         if list(i[1].items())[0][0] == 'files':
             OutList.append([ Current + sep + i[0] , 0 , 0])
             OutList += FolderLoop( i[1],\
-                                   Current = Current + sep + i[0] ,\
+                                  Current = Current + sep + i[0] ,\
                                    sf=sf)
         else:
-            FileName = i[0]
-            Size     = list(i[1].items())[0][1]
-            Offset   = int(list(i[1].items())[1][1])
+            Size   = list(i[1].items())[0][1]
+            Offset = list(i[1].items())[1][1]
 
-            OutList.append([ Current + sep + FileName,\
+            OutList.append([ Current + sep + i[0],\
                              Size,\
-                             Offset + sf ])
+                             int(Offset) + sf ])
     return OutList
 
 def extract(File,OutDir=""):
@@ -43,16 +42,15 @@ def extract(File,OutDir=""):
         
         for i in Index:
             print(i[0])
-        
+            Path = ExecPath + i[0]
             if i[1] == 0 and i[2] == 0:
-                makedirs(ExecPath + i[0],exist_ok=True)
+                makedirs(Path,exist_ok=True)
             else:
                 fr.seek(i[2],0)
                 Data = fr.read(i[1])
-
-                with open(ExecPath + i[0] ,'wb') as fw:
-                    fw.write(Data)
-                    fw.close()
+                fw = open(Path,'wb')
+                fw.write(Data)
+                fw.close()
         fr.close()
 
 if __name__ == '__main__':
