@@ -37,19 +37,17 @@ def extract(File,OutDir=""):
     fr.seek(16,0)
         
     Index =  loads( fr.read(IndexSize).decode('utf8') )
-
-    Index = FolderLoop(Index,\
-                       Current='',\
-                       sf=val_2+8)
+    Index = FolderLoop(Index,Current='',sf=val_2+8)
         
     for i in Index:
         print(i[0])
-        Path = ExecPath + i[0]
-        if i[1] == 0 and i[2] == 0:
-            makedirs(Path,exist_ok=True)
+        EntryName,Size,Offset = i
+        Path = ExecPath + EntryName
+        if (Size,Offset) == (0,0):
+            makedirs(EntryName,exist_ok=True)
         else:
-            fr.seek(i[2],0)
-            Data = fr.read(i[1])
+            fr.seek(Offset,0)
+            Data = fr.read(Size)
             
             fw = open(Path,'wb')
             fw.write(Data)
