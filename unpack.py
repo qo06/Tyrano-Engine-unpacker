@@ -1,7 +1,7 @@
 from struct import unpack
 from json import loads
 from os import makedirs
-from os.path import sep,abspath
+from os.path import sep
 import sys
 
 def FolderLoop(Data='',Current='',sf=0) -> list:
