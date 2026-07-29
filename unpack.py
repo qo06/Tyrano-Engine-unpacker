@@ -1,6 +1,6 @@
 from struct import unpack
 from json import loads
-from os import makedirs,getcwd
+from os import makedirs
 from os.path import sep,abspath
 import sys
 
